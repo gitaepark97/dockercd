@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mariadb/conf.d:/etc/mysql/conf.d
+      - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
+      - mariadb:/var/lib/mysql
+    env_file:
+      - .env
+volumes:
+  mariadb:

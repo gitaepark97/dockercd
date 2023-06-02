@@ -1,0 +1,31 @@
+version: "3"
+services:
+  admin:
+    container_name: admin
+    image: popprikahugo/admin:1.0
+    restart: always
+    volumes:
+      - /app/admin/node_modules
+    command: "npm run start"
+    env_file:
+      - .env
+  client:
+    container_name: client
+    image: popprikahugo/client:1.0
+    restart: always
+    volumes:
+      - /app/client/node_modules
+    command: "npm run start"
+    env_file:
+      - .env
+  nginx:
+    container_name: nginx
+    image: nginx:1.18
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      - admin
+      - client
